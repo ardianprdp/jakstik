@@ -10,17 +10,17 @@
         .spinner-border {
             display: none;
         }
+
         .icon-status {
             font-size: 1.2em;
         }
+
         .icon-status.red {
             color: red;
         }
+
         .icon-status.green {
             color: green;
-        }
-        .status-ended {
-            color: red;
         }
     </style>
 </head>
@@ -68,7 +68,7 @@
                     </table>
                 </div>
                 <div class="mt-4">
-                    <button id="back-button" class="btn btn-secondary">Kembali</button>
+                    <a href="kelas.html" class="btn btn-secondary">Kembali</a>
                 </div>
             </div>
         </div>
@@ -106,17 +106,13 @@
                     const krsTableBody = document.getElementById('krs-table-body');
                     const fetchPromises = data.absenDosen.map((absen, index) => {
                         const absenUrl = `https://api.jakstik.ac.id/mahasiswa-web-api-rest/mahasiswa/getAbsenMahasiswaByIdAbsenDosen/${user.token}/${absen.idAbsenDosen}`;
-                        
+
                         return fetch(absenUrl)
                             .then(response => response.json())
                             .then(absenData => {
                                 let statusIcon;
                                 if (absenData.message === "BELUM ADA ABSENSI") {
-                                    if (absen.aktif == 1) {
-                                        statusIcon = '<span class="status-ended">Sesi kuliah berakhir</span>';
-                                    } else {
-                                        statusIcon = `<a href="#" class="absen-link" data-id-absen-dosen="${absen.idAbsenDosen}" data-id-jadwal-kuliah="${absen.idJadwalKuliah}" data-id-absen-mahasiswa="${absenData.id_absen_mahasiswa || 0}">Absen</a>`;
-                                    }
+                                    statusIcon = `<a href="#" class="absen-link" data-id-absen-dosen="${absen.idAbsenDosen}" data-id-jadwal-kuliah="${absen.idJadwalKuliah}" data-id-absen-mahasiswa="${absenData.id_absen_mahasiswa || 0}">Absen</a>`;
                                 } else {
                                     statusIcon = '<span class="icon-status green">&check;</span>';
                                 }
@@ -153,7 +149,7 @@
                                     const absenData = {
                                         id_absen_mahasiswa: idAbsenMahasiswa,
                                         idAbsenDosen: idAbsenDosen,
-                                        id_mata_kuliah: idJadwalKuliah,
+                                        id_jadwal_kuliah: idJadwalKuliah,
                                         kehadiran: "Hadir"
                                     };
 
@@ -166,7 +162,7 @@
                                     })
                                         .then(response => response.json())
                                         .then(data => {
-                                            if (data.status === 0) {
+                                            if (data) {
                                                 window.location.href = 'riwayat_absensi.html';
                                             } else {
                                                 alert('Gagal melakukan absensi');
@@ -186,15 +182,6 @@
                     console.error('Error fetching absen dosen:', error);
                     loadingSpinner.style.display = 'none';
                 });
-
-            document.getElementById('logout-button').addEventListener('click', function () {
-                sessionStorage.removeItem('user');
-                window.location.href = 'login.html';
-            });
-
-            document.getElementById('back-button').addEventListener('click', function () {
-                window.location.href = 'kelas.html';
-            });
         });
     </script>
 </body>
