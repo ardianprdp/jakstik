@@ -10,17 +10,17 @@
         .spinner-border {
             display: none;
         }
-
         .icon-status {
             font-size: 1.2em;
         }
-
         .icon-status.red {
             color: red;
         }
-
         .icon-status.green {
             color: green;
+        }
+        .status-ended {
+            color: red;
         }
     </style>
 </head>
@@ -53,6 +53,7 @@
                                 <th>Status</th>
                                 <th>Nama Dosen</th>
                                 <th>Kode MK</th>
+                                <th>Hari</th>
                                 <th>Mata Kuliah</th>
                                 <th>Jam</th>
                                 <th>Kelas</th>
@@ -67,7 +68,7 @@
                     </table>
                 </div>
                 <div class="mt-4">
-                    <a href="kelas.html" class="btn btn-secondary">Kembali</a>
+                    <button id="back-button" class="btn btn-secondary">Kembali</button>
                 </div>
             </div>
         </div>
@@ -105,19 +106,27 @@
                     const krsTableBody = document.getElementById('krs-table-body');
                     const fetchPromises = data.absenDosen.map((absen, index) => {
                         const absenUrl = `https://api.jakstik.ac.id/mahasiswa-web-api-rest/mahasiswa/getAbsenMahasiswaByIdAbsenDosen/${user.token}/${absen.idAbsenDosen}`;
-
+                        
                         return fetch(absenUrl)
                             .then(response => response.json())
                             .then(absenData => {
-                                const statusIcon = absenData.message === "BELUM ADA ABSENSI" ?
-                                    '<span class="icon-status red">&times;</span>' :
-                                    '<span class="icon-status green">&check;</span>';
+                                let statusIcon;
+                                if (absenData.message === "BELUM ADA ABSENSI") {
+                                    if (absen.aktif == 0) {
+                                        statusIcon = '<span class="status-ended">Sesi kuliah berakhir</span>';
+                                    } else {
+                                        statusIcon = `<a href="#" class="absen-link" data-id-absen-dosen="${absen.idAbsenDosen}" data-id-jadwal-kuliah="${absen.idJadwalKuliah}" data-id-absen-mahasiswa="${absenData.id_absen_mahasiswa || 0}">Absen</a>`;
+                                    }
+                                } else {
+                                    statusIcon = '<span class="icon-status green">&check;</span>';
+                                }
 
                                 const row = document.createElement('tr');
                                 row.innerHTML = `
                                     <td>${statusIcon}</td>
                                     <td>${absen.nm_sdm}</td>
                                     <td>${absen.kodemk}</td>
+                                    <td>${absen.hari}</td>
                                     <td>${absen.mtkuliah}</td>
                                     <td>${absen.jam}</td>
                                     <td>${absen.kelas}</td>
@@ -134,6 +143,43 @@
                     Promise.all(fetchPromises)
                         .finally(() => {
                             loadingSpinner.style.display = 'none';
+                            document.querySelectorAll('.absen-link').forEach(link => {
+                                link.addEventListener('click', function (event) {
+                                    event.preventDefault();
+                                    const idAbsenDosen = this.getAttribute('data-id-absen-dosen');
+                                    const idJadwalKuliah = this.getAttribute('data-id-jadwal-kuliah');
+                                    const idAbsenMahasiswa = this.getAttribute('data-id-absen-mahasiswa');
+
+                                    const absenData = {
+                                        id_absen_mahasiswa: idAbsenMahasiswa,
+                                        idAbsenDosen: idAbsenDosen,
+                                        id_mata_kuliah: idJadwalKuliah,
+                                        kehadiran: "Hadir"
+                                    };
+
+                                    fetch(`https://api.jakstik.ac.id/mahasiswa-web-api-rest/mahasiswa/saveAbsen/${user.token}`, {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify(absenData)
+                                    })
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            if (data === 0) {
+                                                window.location.href = 'riwayat_absensi.html';
+                                            } else {
+                                                alert('Gagal melakukan absensi');
+                                                window.location.href = 'riwayat_absensi.html';
+                                            }
+                                        })
+                                        .catch(error => {
+                                            console.error('Error saving absen:', error);
+                                            alert('Gagal melakukan absensi');
+                                            window.location.href = 'riwayat_absensi.html';
+                                        });
+                                });
+                            });
                         });
                 })
                 .catch(error => {
@@ -141,6 +187,14 @@
                     loadingSpinner.style.display = 'none';
                 });
 
+            document.getElementById('logout-button').addEventListener('click', function () {
+                sessionStorage.removeItem('user');
+                window.location.href = 'login.html';
+            });
+
+            document.getElementById('back-button').addEventListener('click', function () {
+                window.location.href = 'kelas.html';
+            });
         });
     </script>
 </body>

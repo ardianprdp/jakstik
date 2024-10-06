@@ -1,7 +1,7 @@
 {
   "name": "Absen Bang JAKSTIK",
-  "short_name": "Absen",
-  "start_url": "/login.html",
+  "short_name": "Absen Bang",
+  "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#333333",
