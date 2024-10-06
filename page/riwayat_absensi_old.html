@@ -111,30 +111,44 @@
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
-                    const absensiTableBody = document.getElementById('krs-table-body');
-                    const fetchPromises = data.absenDosen.map(absen => {
-                        const absenUrl = `https://api.jakstik.ac.id/mahasiswa-web-api-rest/mahasiswa/getAbsenDosenById/${user.token}/${absen.idAbsenDosen}`;
+                    const krsTableBody = document.getElementById('krs-table-body');
+                    const fetchPromises = data.absenDosen.map((absen, index) => {
+                        const absenUrl = `https://api.jakstik.ac.id/mahasiswa-web-api-rest/mahasiswa/getAbsenMahasiswaByIdAbsenDosen/${user.token}/${absen.idAbsenDosen}`;
+                        // const absenUrl = `https://api.jakstik.ac.id/mahasiswa-web-api-rest/mahasiswa/getAbsenDosenById/${user.token}/${absen.idAbsenDosen}`;
+
                         return fetch(absenUrl)
                             .then(response => response.json())
                             .then(absenData => {
-                                let statusIcon = '';
-                                if (absenData.aktif == 0) {
-                                    statusIcon = '<span class="status-ended">Sesi kuliah berakhir</span>';
-                                    appendRow(absensiTableBody, absen, statusIcon);
-                                } else if (absenData.aktif == 1) {
-                                    const mahasiswaUrl = `https://api.jakstik.ac.id/mahasiswa-web-api-rest/mahasiswa/getAbsenMahasiswaByIdAbsenDosen/${user.token}/${absen.idAbsenDosen}`;
-                                    return fetch(mahasiswaUrl)
-                                        .then(response => response.json())
-                                        .then(mahasiswaData => {
-                                            if (mahasiswaData.message === "BELUM ADA ABSENSI") {
-                                                statusIcon = `<a href="#" class="absen-link" data-id-absen-dosen="${absen.idAbsenDosen}" data-id-jadwal-kuliah="${absen.idJadwalKuliah}" data-id-absen-mahasiswa="${mahasiswaData.id_absen_mahasiswa || 0}">Absen</a>`;
-                                            } else if (mahasiswaData.message === null) {
-                                                statusIcon = '<span class="icon-status green">&check;</span>';
-                                            }
-                                            appendRow(absensiTableBody, absen, statusIcon);
-                                        });
+                                let statusIcon;
+                                if (absenData.message === "BELUM ADA ABSENSI") {
+                                    console.log(absen);
+                                    
+                                    if (absen.aktif == 0) {
+                                        statusIcon = '<span class="status-ended">Sesi kuliah berakhir</span>';
+                                    } else {
+                                        statusIcon = `<a href="#" class="absen-link" data-id-absen-dosen="${absen.idAbsenDosen}" data-id-jadwal-kuliah="${absen.idJadwalKuliah}" data-id-absen-mahasiswa="${absenData.id_absen_mahasiswa || 0}">Absen</a>`;
+                                    }
+                                } else {
+                                    statusIcon = '<span class="icon-status green">&check;</span>';
                                 }
-                            });
+
+                                const row = document.createElement('tr');
+                                row.innerHTML = `
+                                    <td>${statusIcon}</td>
+                                    <td>${absen.nm_sdm}</td>
+                                    <td>${absen.kodemk}</td>
+                                    <td>${absen.hari}</td>
+                                    <td>${absen.mtkuliah}</td>
+                                    <td>${absen.jam}</td>
+                                    <td>${absen.kelas}</td>
+                                    <td>${absen.ruang}</td>
+                                    <td>${absen.strTanggal}</td>
+                                    <td>${absen.strJamMasuk}</td>
+                                    <td>${absen.strJamKeluar}</td>
+                                `;
+                                krsTableBody.appendChild(row);
+                            })
+                            .catch(error => console.error('Error fetching absen mahasiswa:', error));
                     });
 
                     Promise.all(fetchPromises)
@@ -166,6 +180,7 @@
                                             if (data === 0) {
                                                 window.location.href = 'riwayat_absensi.html';
                                             } else {
+                                                // log(data);
                                                 alert('Gagal melakukan absensi');
                                                 window.location.href = 'riwayat_absensi.html';
                                             }
@@ -183,24 +198,6 @@
                     console.error('Error fetching absen dosen:', error);
                     loadingSpinner.style.display = 'none';
                 });
-
-            function appendRow(tableBody, absen, statusIcon) {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${statusIcon}</td>
-                    <td>${absen.nm_sdm}</td>
-                    <td>${absen.kodemk}</td>
-                    <td>${absen.hari}</td>
-                    <td>${absen.mtkuliah}</td>
-                    <td>${absen.jam}</td>
-                    <td>${absen.kelas}</td>
-                    <td>${absen.ruang}</td>
-                    <td>${absen.strTanggal}</td>
-                    <td>${absen.strJamMasuk}</td>
-                    <td>${absen.strJamKeluar}</td>
-                `;
-                tableBody.appendChild(row);
-            }
         });
     </script>
 </body>
