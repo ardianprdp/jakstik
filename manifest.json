@@ -1,7 +1,7 @@
 {
   "name": "Absen Bang JAKSTIK",
   "short_name": "Absen Bang",
-  "start_url": "/index.html",
+  "start_url": "https://github.com/ardianprdp/jakstik",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#333333",
