@@ -112,7 +112,7 @@
                             .then(absenData => {
                                 let statusIcon;
                                 if (absenData.message === "BELUM ADA ABSENSI") {
-                                    if (absen.aktif == 1) {
+                                    if (absen.aktif == 0) {
                                         statusIcon = '<span class="status-ended">Sesi kuliah berakhir</span>';
                                     } else {
                                         statusIcon = `<a href="#" class="absen-link" data-id-absen-dosen="${absen.idAbsenDosen}" data-id-jadwal-kuliah="${absen.idJadwalKuliah}" data-id-absen-mahasiswa="${absenData.id_absen_mahasiswa || 0}">Absen</a>`;
@@ -166,7 +166,7 @@
                                     })
                                         .then(response => response.json())
                                         .then(data => {
-                                            if (data.status === 0) {
+                                            if (data === 0) {
                                                 window.location.href = 'riwayat_absensi.html';
                                             } else {
                                                 alert('Gagal melakukan absensi');
