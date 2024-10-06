@@ -6,6 +6,8 @@ self.addEventListener('install', function(event) {
                 '/index.html',
                 '/page/login.html',
                 '/page/jadwal.html',
+                '/page/kelas.html',
+                '/page/riwayat_absensi.html',
                 '/manifest.json',
                 '/icons/icon-192x192.png',
                 '/icons/icon-512x512.png',
