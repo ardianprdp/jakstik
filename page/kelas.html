@@ -76,9 +76,8 @@
             document.getElementById('user-name').textContent = user.name;
             document.getElementById('user-details').innerHTML = `
                 <strong>Company:</strong> ${user.company}<br>
-                <strong>ID:</strong> ${user.id}<br>
+                <strong>NPM:</strong> ${user.userName}<br>
                 <strong>Prodi:</strong> ${user.prodi}<br>
-                <strong>Jenjang:</strong> ${user.jenjang}<br>
             `;
 
             document.getElementById('kelas-header').textContent = 'Kelas: ' + kelas.nm_mk;
@@ -125,7 +124,15 @@
                 });
 
             document.getElementById('logout-button').addEventListener('click', function () {
+                // delete semua cookie
+                document.cookie.split(';').forEach(function (c) {
+                    document.cookie = c.replace(/^ +/, '').replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/');
+                });
+
+                //  delete session
                 sessionStorage.removeItem('user');
+
+                // redirect
                 window.location.href = 'login.html';
             });
         });

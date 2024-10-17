@@ -48,7 +48,6 @@
         <div id="krs-info" class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 id="kelas-header" class="mb-0">Kelas</h5>
-                <h5 id="dosen-header" class="mb-0">Dosen</h5>
             </div>
             <div class="card-body">
                 <div class="spinner-border text-primary" role="status" id="loading-spinner">
@@ -95,13 +94,11 @@
             document.getElementById('user-name').textContent = user.name;
             document.getElementById('user-details').innerHTML = `
                 <strong>Company:</strong> ${user.company}<br>
-                <strong>ID:</strong> ${user.id}<br>
+                <strong>NPM:</strong> ${user.userName}<br>
                 <strong>Prodi:</strong> ${user.prodi}<br>
-                <strong>Jenjang:</strong> ${user.jenjang}<br>
             `;
 
             document.getElementById('kelas-header').textContent = 'Kelas: ' + mata_kuliah.jadwalKuliah;
-            document.getElementById('dosen-header').textContent = 'Mata Kuliah: ' + mata_kuliah.matakuliah;
 
             const loadingSpinner = document.getElementById('loading-spinner');
             loadingSpinner.style.display = 'block';
@@ -200,6 +197,19 @@
                 `;
                 tableBody.appendChild(row);
             }
+
+            document.getElementById('logout-button').addEventListener('click', function () {
+                // delete semua cookie
+                document.cookie.split(';').forEach(function (c) {
+                    document.cookie = c.replace(/^ +/, '').replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/');
+                });
+
+                //  delete session
+                sessionStorage.removeItem('user');
+
+                // redirect
+                window.location.href = 'login.html';
+            });
         });
     </script>
 </body>

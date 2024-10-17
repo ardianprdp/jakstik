@@ -59,6 +59,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+
             const user = JSON.parse(sessionStorage.getItem('user'));
             if (!user) {
                 window.location.href = 'login.html';
@@ -68,9 +69,8 @@
             document.getElementById('user-name').textContent = user.name;
             document.getElementById('user-details').innerHTML = `
                 <strong>Company:</strong> ${user.company}<br>
-                <strong>ID:</strong> ${user.id}<br>
+                <strong>NPM:</strong> ${user.userName}<br>
                 <strong>Prodi:</strong> ${user.prodi}<br>
-                <strong>Jenjang:</strong> ${user.jenjang}<br>
             `;
 
             const loadingSpinner = document.getElementById('loading-spinner');
@@ -132,7 +132,15 @@
                 });
 
             document.getElementById('logout-button').addEventListener('click', function () {
+                // delete semua cookie
+                document.cookie.split(';').forEach(function (c) {
+                    document.cookie = c.replace(/^ +/, '').replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/');
+                });                 
+
+                //  delete session
                 sessionStorage.removeItem('user');
+
+                // redirect
                 window.location.href = 'login.html';
             });
         });
