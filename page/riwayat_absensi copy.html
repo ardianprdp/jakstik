@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#ffffff">
-    <title>Kelas</title>
+    <title>Riwayat Absensi</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" type="image/png" sizes="192x192" href="../icons/icon-192x192.png">
     <link rel="apple-touch-icon" href="../icons/icon-192x192.png">
@@ -14,6 +14,23 @@
         .spinner-border {
             display: none;
         }
+
+        .icon-status {
+            font-size: 1.2em;
+        }
+
+        .icon-status.red {
+            color: red;
+        }
+
+        .icon-status.green {
+            color: green;
+        }
+
+        .status-ended {
+            color: red;
+        }
+
         body {
             background-color: #ffffff;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2000 1500'%3E%3Cdefs%3E%3Crect stroke='%23ffffff' stroke-width='0.2' width='1' height='1' id='s'/%3E%3Cpattern id='a' width='3' height='3' patternUnits='userSpaceOnUse' patternTransform='rotate(40 1000 750) scale(34.1) translate(-970.67 -728.01)'%3E%3Cuse fill='%23fcfcfc' href='%23s' y='2'/%3E%3Cuse fill='%23fcfcfc' href='%23s' x='1' y='2'/%3E%3Cuse fill='%23fafafa' href='%23s' x='2' y='2'/%3E%3Cuse fill='%23fafafa' href='%23s'/%3E%3Cuse fill='%23f7f7f7' href='%23s' x='2'/%3E%3Cuse fill='%23f7f7f7' href='%23s' x='1' y='1'/%3E%3C/pattern%3E%3Cpattern id='b' width='7' height='11' patternUnits='userSpaceOnUse' patternTransform='rotate(40 1000 750) scale(34.1) translate(-970.67 -728.01)'%3E%3Cg fill='%23f5f5f5'%3E%3Cuse href='%23s'/%3E%3Cuse href='%23s' y='5' /%3E%3Cuse href='%23s' x='1' y='10'/%3E%3Cuse href='%23s' x='2' y='1'/%3E%3Cuse href='%23s' x='2' y='4'/%3E%3Cuse href='%23s' x='3' y='8'/%3E%3Cuse href='%23s' x='4' y='3'/%3E%3Cuse href='%23s' x='4' y='7'/%3E%3Cuse href='%23s' x='5' y='2'/%3E%3Cuse href='%23s' x='5' y='6'/%3E%3Cuse href='%23s' x='6' y='9'/%3E%3C/g%3E%3C/pattern%3E%3Cpattern id='h' width='5' height='13' patternUnits='userSpaceOnUse' patternTransform='rotate(40 1000 750) scale(34.1) translate(-970.67 -728.01)'%3E%3Cg fill='%23f5f5f5'%3E%3Cuse href='%23s' y='5'/%3E%3Cuse href='%23s' y='8'/%3E%3Cuse href='%23s' x='1' y='1'/%3E%3Cuse href='%23s' x='1' y='9'/%3E%3Cuse href='%23s' x='1' y='12'/%3E%3Cuse href='%23s' x='2'/%3E%3Cuse href='%23s' x='2' y='4'/%3E%3Cuse href='%23s' x='3' y='2'/%3E%3Cuse href='%23s' x='3' y='6'/%3E%3Cuse href='%23s' x='3' y='11'/%3E%3Cuse href='%23s' x='4' y='3'/%3E%3Cuse href='%23s' x='4' y='7'/%3E%3Cuse href='%23s' x='4' y='10'/%3E%3C/g%3E%3C/pattern%3E%3Cpattern id='c' width='17' height='13' patternUnits='userSpaceOnUse' patternTransform='rotate(40 1000 750) scale(34.1) translate(-970.67 -728.01)'%3E%3Cg fill='%23f2f2f2'%3E%3Cuse href='%23s' y='11'/%3E%3Cuse href='%23s' x='2' y='9'/%3E%3Cuse href='%23s' x='5' y='12'/%3E%3Cuse href='%23s' x='9' y='4'/%3E%3Cuse href='%23s' x='12' y='1'/%3E%3Cuse href='%23s' x='16' y='6'/%3E%3C/g%3E%3C/pattern%3E%3Cpattern id='d' width='19' height='17' patternUnits='userSpaceOnUse' patternTransform='rotate(40 1000 750) scale(34.1) translate(-970.67 -728.01)'%3E%3Cg fill='%23ffffff'%3E%3Cuse href='%23s' y='9'/%3E%3Cuse href='%23s' x='16' y='5'/%3E%3Cuse href='%23s' x='14' y='2'/%3E%3Cuse href='%23s' x='11' y='11'/%3E%3Cuse href='%23s' x='6' y='14'/%3E%3C/g%3E%3Cg fill='%23efefef'%3E%3Cuse href='%23s' x='3' y='13'/%3E%3Cuse href='%23s' x='9' y='7'/%3E%3Cuse href='%23s' x='13' y='10'/%3E%3Cuse href='%23s' x='15' y='4'/%3E%3Cuse href='%23s' x='18' y='1'/%3E%3C/g%3E%3C/pattern%3E%3Cpattern id='e' width='47' height='53' patternUnits='userSpaceOnUse' patternTransform='rotate(40 1000 750) scale(34.1) translate(-970.67 -728.01)'%3E%3Cg fill='%23F60'%3E%3Cuse href='%23s' x='2' y='5'/%3E%3Cuse href='%23s' x='16' y='38'/%3E%3Cuse href='%23s' x='46' y='42'/%3E%3Cuse href='%23s' x='29' y='20'/%3E%3C/g%3E%3C/pattern%3E%3Cpattern id='f' width='59' height='71' patternUnits='userSpaceOnUse' patternTransform='rotate(40 1000 750) scale(34.1) translate(-970.67 -728.01)'%3E%3Cg fill='%23F60'%3E%3Cuse href='%23s' x='33' y='13'/%3E%3Cuse href='%23s' x='27' y='54'/%3E%3Cuse href='%23s' x='55' y='55'/%3E%3C/g%3E%3C/pattern%3E%3Cpattern id='g' width='139' height='97' patternUnits='userSpaceOnUse' patternTransform='rotate(40 1000 750) scale(34.1) translate(-970.67 -728.01)'%3E%3Cg fill='%23F60'%3E%3Cuse href='%23s' x='11' y='8'/%3E%3Cuse href='%23s' x='51' y='13'/%3E%3Cuse href='%23s' x='17' y='73'/%3E%3Cuse href='%23s' x='99' y='57'/%3E%3C/g%3E%3C/pattern%3E%3C/defs%3E%3Crect fill='url(%23a)' width='100%25' height='100%25'/%3E%3Crect fill='url(%23b)' width='100%25' height='100%25'/%3E%3Crect fill='url(%23h)' width='100%25' height='100%25'/%3E%3Crect fill='url(%23c)' width='100%25' height='100%25'/%3E%3Crect fill='url(%23d)' width='100%25' height='100%25'/%3E%3Crect fill='url(%23e)' width='100%25' height='100%25'/%3E%3Crect fill='url(%23f)' width='100%25' height='100%25'/%3E%3Crect fill='url(%23g)' width='100%25' height='100%25'/%3E%3C/svg%3E");
@@ -49,7 +66,6 @@
         <div id="krs-info" class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 id="kelas-header" class="mb-0">Kelas</h5>
-                <h5 id="dosen-header" class="mb-0">Dosen</h5>
             </div>
             <div class="card-body">
                 <div class="spinner-border text-primary" role="status" id="loading-spinner">
@@ -59,14 +75,15 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>No</th>
-                                <th>Hari</th>
-                                <th>Prodi</th>
+                                <th>Status</th>
+                                <th>Nama Dosen</th>
+                                <th>Tanggal</th>
                                 <th>Kode MK</th>
-                                <th>Matakuliah</th>
+                                <th>Hari</th>
+                                <th>Mata Kuliah</th>
                                 <th>Jam</th>
-                                <th>Ruang</th>
-                                <th>Dosen</th>
+                                <th>Jam Masuk</th>
+                                <th>Jam Keluar</th>
                             </tr>
                         </thead>
                         <tbody id="krs-table-body">
@@ -74,7 +91,7 @@
                     </table>
                 </div>
                 <div class="mt-4">
-                    <a href="jadwal.html" class="btn btn-secondary">Kembali</a>
+                    <a href="kelas.html" class="btn btn-secondary">Kembali</a>
                 </div>
             </div>
         </div>
@@ -83,9 +100,9 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const user = JSON.parse(sessionStorage.getItem('user'));
-            const kelas = JSON.parse(sessionStorage.getItem('kelas'));
+            const mata_kuliah = JSON.parse(sessionStorage.getItem('mata_kuliah'));
 
-            if (!user || !kelas) {
+            if (!user || !mata_kuliah) {
                 window.location.href = 'login.html';
                 return;
             }
@@ -97,48 +114,113 @@
                 <strong>Prodi:</strong> ${user.prodi}<br>
             `;
 
-            document.getElementById('kelas-header').textContent = 'Kelas: ' + kelas.nm_mk;
+            document.getElementById('kelas-header').textContent = 'Kelas: ' + mata_kuliah.jadwalKuliah;
 
             const loadingSpinner = document.getElementById('loading-spinner');
             loadingSpinner.style.display = 'block';
 
-            const url = `https://api.jakstik.ac.id/mahasiswa-web-api-rest/mahasiswa/listAllJadwalKuliahByIdJadwal/${user.token}/${kelas.id_kls}`;
+            const url = `https://api.jakstik.ac.id/mahasiswa-web-api-rest/mahasiswa/listAllAbsenDosenByIdJadwalKuliah/${user.token}/${mata_kuliah.idJadwalKuliah}`;
 
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
-                    const krsTableBody = document.getElementById('krs-table-body');
-                    document.getElementById('dosen-header').textContent = 'Dosen: ' + data.jadwal[0].dosen;
-                    data.jadwal.forEach((jadwal, index) => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                <td>${index + 1}</td>
-                <td><a href="#" class="hari-link" data-id-jadwal-kuliah="${jadwal.idJadwalKuliah}" data-jadwal-kuliah="${jadwal.jadwalKuliah}" data-matakuliah="${jadwal.matakuliah}">${jadwal.hari}</a></td>
-                <td>${jadwal.prodi}</td>
-                <td>${jadwal.kodeMk}</td>
-                <td>${jadwal.matakuliah}</td>
-                <td>${jadwal.jam}</td>
-                <td>${jadwal.ruang}</td>
-                <td>${jadwal.dosen}</td>
-            `;
-                        krsTableBody.appendChild(row);
+                    const absensiTableBody = document.getElementById('krs-table-body');
+                    const fetchPromises = data.absenDosen.map(absen => {
+                        const absenUrl = `https://api.jakstik.ac.id/mahasiswa-web-api-rest/mahasiswa/getAbsenDosenById/${user.token}/${absen.idAbsenDosen}`;
+                        return fetch(absenUrl)
+                            .then(response => response.json())
+                            .then(absenData => {
+                                let statusIcon = '';
+                                if (absenData.aktif == 0) {
+                                    statusIcon = '<span class="status-ended">Sesi kuliah berakhir</span>';
+                                    return { absen, statusIcon };
+                                } else if (absenData.aktif == 1) {
+                                    const mahasiswaUrl = `https://api.jakstik.ac.id/mahasiswa-web-api-rest/mahasiswa/getAbsenMahasiswaByIdAbsenDosen/${user.token}/${absen.idAbsenDosen}`;
+                                    return fetch(mahasiswaUrl)
+                                        .then(response => response.json())
+                                        .then(mahasiswaData => {
+                                            if (mahasiswaData.message === "BELUM ADA ABSENSI") {
+                                                statusIcon = `<a href="#" class="absen-link" data-id-absen-dosen="${absen.idAbsenDosen}" data-id-jadwal-kuliah="${absen.idJadwalKuliah}" data-id-absen-mahasiswa="${mahasiswaData.id_absen_mahasiswa || 0}">Absen</a>`;
+                                            } else if (mahasiswaData.message === null) {
+                                                statusIcon = '<span class="icon-status green">&check;</span>';
+                                            }
+                                            return { absen, statusIcon };
+                                        });
+                                }
+                            });
                     });
 
-                    document.querySelectorAll('.hari-link').forEach(link => {
-                        link.addEventListener('click', function (event) {
-                            event.preventDefault();
-                            const idJadwalKuliah = this.getAttribute('data-id-jadwal-kuliah');
-                            const jadwalKuliah = this.getAttribute('data-jadwal-kuliah');
-                            const matakuliah = this.getAttribute('data-matakuliah');
-                            sessionStorage.setItem('mata_kuliah', JSON.stringify({ idJadwalKuliah, jadwalKuliah, matakuliah }));
-                            window.location.href = 'riwayat_absensi.html';
+                    Promise.all(fetchPromises)
+                        .then(results => {
+                            // Sort results by `strTanggal` in descending order
+                            results.sort((a, b) => new Date(b.absen.strTanggal) - new Date(a.absen.strTanggal));
+
+                            // Append sorted rows to the table
+                            results.forEach(({ absen, statusIcon }) => {
+                                appendRow(absensiTableBody, absen, statusIcon);
+                            });
+                        })
+                        .finally(() => {
+                            loadingSpinner.style.display = 'none';
+                            document.querySelectorAll('.absen-link').forEach(link => {
+                                link.addEventListener('click', function (event) {
+                                    event.preventDefault();
+                                    const idAbsenDosen = this.getAttribute('data-id-absen-dosen');
+                                    const idJadwalKuliah = this.getAttribute('data-id-jadwal-kuliah');
+                                    const idAbsenMahasiswa = this.getAttribute('data-id-absen-mahasiswa');
+
+                                    const absenData = {
+                                        id_absen_mahasiswa: idAbsenMahasiswa,
+                                        idAbsenDosen: parseInt(idAbsenDosen),
+                                        id_jadwal_kuliah: parseInt(idJadwalKuliah),
+                                        kehadiran: "Hadir"
+                                    };
+
+                                    fetch(`https://api.jakstik.ac.id/mahasiswa-web-api-rest/mahasiswa/saveAbsen/${user.token}`, {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify(absenData)
+                                    })
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            if (data === 0) {
+                                                window.location.href = 'riwayat_absensi.html';
+                                            } else {
+                                                alert('Gagal melakukan absensi');
+                                                window.location.href = 'riwayat_absensi.html';
+                                            }
+                                        })
+                                        .catch(error => {
+                                            alert('Gagal melakukan absensi');
+                                            window.location.href = 'riwayat_absensi.html';
+                                        });
+                                });
+                            });
+                        })
+                        .catch(error => {
+                            console.error('Error fetching absen dosen:', error);
+                            loadingSpinner.style.display = 'none';
                         });
-                    });
-                })
-                .catch(error => console.error('Error:', error))
-                .finally(() => {
-                    loadingSpinner.style.display = 'none';
                 });
+
+            function appendRow(tableBody, absen, statusIcon) {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+        <td>${statusIcon}</td>
+        <td>${absen.nm_sdm}</td>
+        <td>${absen.strTanggal}</td>
+        <td>${absen.kodemk}</td>
+        <td>${absen.hari}</td>
+        <td>${absen.mtkuliah}</td>
+        <td>${absen.jam}</td>
+        <td>${absen.strJamMasuk}</td>
+        <td>${absen.strJamKeluar}</td>
+    `;
+                tableBody.appendChild(row);
+            }
+
 
             document.getElementById('logout-button').addEventListener('click', function () {
                 // delete semua cookie
