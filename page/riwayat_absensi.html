@@ -101,9 +101,10 @@
         document.addEventListener('DOMContentLoaded', function () {
             const user = JSON.parse(sessionStorage.getItem('user'));
             const mata_kuliah = JSON.parse(sessionStorage.getItem('mata_kuliah'));
+            const url_api = JSON.parse(sessionStorage.getItem('url_api'));
 
             if (!user || !mata_kuliah) {
-                window.location.href = 'login.html';
+                window.location.href = '../login.html';
                 return;
             }
 
@@ -119,14 +120,14 @@
             const loadingSpinner = document.getElementById('loading-spinner');
             loadingSpinner.style.display = 'block';
 
-            const url = `https://api.jakstik.ac.id/mahasiswa-web-api-rest/mahasiswa/listAllAbsenDosenByIdJadwalKuliah/${user.token}/${mata_kuliah.idJadwalKuliah}`;
+            const url = url_api + `/mahasiswa-web-api-rest/mahasiswa/listAllAbsenDosenByIdJadwalKuliah/${user.token}/${mata_kuliah.idJadwalKuliah}`;
 
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
                     const absensiTableBody = document.getElementById('krs-table-body');
                     const fetchPromises = data.absenDosen.map(absen => {
-                        const absenUrl = `https://api.jakstik.ac.id/mahasiswa-web-api-rest/mahasiswa/getAbsenDosenById/${user.token}/${absen.idAbsenDosen}`;
+                        const absenUrl = url_api + `/mahasiswa-web-api-rest/mahasiswa/getAbsenDosenById/${user.token}/${absen.idAbsenDosen}`;
                         return fetch(absenUrl)
                             .then(response => response.json())
                             .then(absenData => {
@@ -136,7 +137,7 @@
                                     appendRow(absensiTableBody, absen, statusIcon);
                                     return null; // Supaya tidak masuk ke Promise.all() sebagai undefined
                                 } else if (absenData.aktif == 1) {
-                                    const mahasiswaUrl = `https://api.jakstik.ac.id/mahasiswa-web-api-rest/mahasiswa/getAbsenMahasiswaByIdAbsenDosen/${user.token}/${absen.idAbsenDosen}`;
+                                    const mahasiswaUrl = url_api + `/mahasiswa-web-api-rest/mahasiswa/getAbsenMahasiswaByIdAbsenDosen/${user.token}/${absen.idAbsenDosen}`;
                                     return fetch(mahasiswaUrl)
                                         .then(response => response.json())
                                         .then(mahasiswaData => {
@@ -170,7 +171,7 @@
                                         kehadiran: "Hadir"
                                     };
 
-                                    fetch(`https://api.jakstik.ac.id/mahasiswa-web-api-rest/mahasiswa/saveAbsen/${user.token}`, {
+                                    fetch(url_api + `/mahasiswa-web-api-rest/mahasiswa/saveAbsen/${user.token}`, {
                                         method: 'POST',
                                         headers: {
                                             'Content-Type': 'application/json'
@@ -224,9 +225,10 @@
 
                 // delete session
                 sessionStorage.removeItem('user');
+                sessionStorage.removeItem('url_api');
 
                 // redirect
-                window.location.href = 'login.html';
+                window.location.href = '../login.html';
             });
         });
 

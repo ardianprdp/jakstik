@@ -84,9 +84,10 @@
         document.addEventListener('DOMContentLoaded', function () {
             const user = JSON.parse(sessionStorage.getItem('user'));
             const kelas = JSON.parse(sessionStorage.getItem('kelas'));
+            const url_api = JSON.parse(sessionStorage.getItem('url_api'));
 
             if (!user || !kelas) {
-                window.location.href = 'login.html';
+                window.location.href = '../login.html';
                 return;
             }
 
@@ -102,7 +103,7 @@
             const loadingSpinner = document.getElementById('loading-spinner');
             loadingSpinner.style.display = 'block';
 
-            const url = `https://api.jakstik.ac.id/mahasiswa-web-api-rest/mahasiswa/listAllJadwalKuliahByIdJadwal/${user.token}/${kelas.id_kls}`;
+            const url = url_api + `/mahasiswa-web-api-rest/mahasiswa/listAllJadwalKuliahByIdJadwal/${user.token}/${kelas.id_kls}`;
 
             fetch(url)
                 .then(response => response.json())
@@ -150,7 +151,7 @@
                 sessionStorage.removeItem('user');
 
                 // redirect
-                window.location.href = 'login.html';
+                window.location.href = '../login.html';
             });
         });
     </script>

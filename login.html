@@ -25,6 +25,13 @@
                     <label for="password" class="form-label">Password</label>
                     <input type="password" class="form-control" id="password" required>
                 </div>
+                <div class="mb-3">
+                    <label for="url" class="form-label">Web</label>
+                    <select class="form-select" aria-label="Default select example" id="url">
+                        <option value="https://api.jakstik.com" selected>.com</option>
+                        <option value="https://api.jakstik.ac.id">.ac.id</option>
+                      </select>
+                </div>
                 <div class="d-grid gap-2">
                     <button type="submit" class="btn btn-primary" id="loginButton">
                         <span id="buttonText">Login</span>
@@ -51,7 +58,7 @@
                 const userData = JSON.parse(userValue);
 
                 sessionStorage.setItem('user', JSON.stringify(userData));
-                window.location.href = 'jadwal.html';
+                window.location.href = 'page/jadwal.html';
             }
 
             document.getElementById('loginForm').addEventListener('submit', function (event) {
@@ -75,6 +82,11 @@
 
                 const npm = document.getElementById('npm').value;
                 const password = document.getElementById('password').value;
+                const url_api = document.getElementById('url').value;
+
+                console.log(npm);
+                console.log(password);
+                console.log(url_api);
 
                 const requestBody = {
                     userName: npm,
@@ -83,7 +95,7 @@
                     ipAddress: "110.138.87.71"
                 };
 
-                fetch('https://api.jakstik.ac.id/jakstik-web-api-rest/host/sessionNew', {
+                fetch(url_api + '/jakstik-web-api-rest/host/sessionNew', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -94,9 +106,11 @@
                     .then(data => {
                         if (data.message === "SUCCESS") {
                             sessionStorage.setItem('user', JSON.stringify(data));
+                            sessionStorage.setItem('url_api', JSON.stringify(url_api));
                             // document.cookie = "user=" + encodeURIComponent(JSON.stringify(data)) + "; path=/";
                             setCookie("user", encodeURIComponent(JSON.stringify(data)), 30);
-                            window.location.href = 'jadwal.html';
+                            setCookie("url_api", url_api, 30);
+                            window.location.href = 'page/jadwal.html';
                         } else {
                             // Handle login failure
                             loginButton.disabled = false;
@@ -107,7 +121,16 @@
                             window.location.reload();
                         }
                     })
-                    .catch(error => console.error('Error:', error));
+                    .catch(error => {
+
+                        console.error('Error:', error)
+                        // Handle login failure
+                        loginButton.disabled = false;
+                        spinner.style.display = 'none';
+                        buttonText.style.display = 'inline';
+                        alert("Login gagal. Silakan coba lagi.");
+
+                    });
             });
         });
     </script>

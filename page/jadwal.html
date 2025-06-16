@@ -74,8 +74,10 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const user = JSON.parse(sessionStorage.getItem('user'));
+            const url_api = JSON.parse(sessionStorage.getItem('url_api'));
+
             if (!user) {
-                window.location.href = 'login.html';
+                window.location.href = '../login.html';
                 return;
             }
 
@@ -84,16 +86,17 @@
                 <strong>Company:</strong> ${user.company}<br>
                 <strong>NPM:</strong> ${user.userName}<br>
                 <strong>Prodi:</strong> ${user.prodi}<br>
+                <strong>API Domain:</strong> ${url_api}<br>
             `;
 
             const loadingSpinner = document.getElementById('loading-spinner');
             loadingSpinner.style.display = 'block';
 
-            fetch('https://api.jakstik.ac.id/mahasiswa-web-api-rest/mahasiswa/getSemesterAktif')
+            fetch(url_api + '/mahasiswa-web-api-rest/mahasiswa/getSemesterAktif')
                 .then(response => response.json())
                 .then(data => {
                     const smtAktif = data.strSmt;
-                    const url = `https://api.jakstik.ac.id/mahasiswa-web-api-rest/mahasiswa/getKrsByIdUserAndIdSmt/${user.token}/${user.idUser}/${smtAktif}`;
+                    const url = url_api + `/mahasiswa-web-api-rest/mahasiswa/getKrsByIdUserAndIdSmt/${user.token}/${user.idUser}/${smtAktif}`;
                     return fetch(url);
                 })
                 .then(response => response.json())
@@ -153,15 +156,15 @@
                 sessionStorage.removeItem('user');
 
                 // redirect
-                window.location.href = 'login.html';
+                window.location.href = '../login.html';
             });
 
             function getMatkulBelumAbsen(user) {
-                fetch('https://api.jakstik.ac.id/mahasiswa-web-api-rest/mahasiswa/getSemesterAktif')
+                fetch(url_api + '/mahasiswa-web-api-rest/mahasiswa/getSemesterAktif')
                     .then(response => response.json())
                     .then(getSemesterAktif => {
                         const smtAktif = getSemesterAktif.strSmt;
-                        const url = `https://api.jakstik.ac.id/mahasiswa-web-api-rest/mahasiswa/getKrsByIdUserAndIdSmt/${user.token}/${user.idUser}/${smtAktif}`;
+                        const url = url_api + `/mahasiswa-web-api-rest/mahasiswa/getKrsByIdUserAndIdSmt/${user.token}/${user.idUser}/${smtAktif}`;
                         return fetch(url);
                     })
                     .then(response => response.json())
